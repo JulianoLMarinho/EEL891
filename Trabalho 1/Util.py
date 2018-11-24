@@ -8,17 +8,19 @@ import numpy as np
 tipo = {"Casa": 4, "Apartamento": 3, "Loft": 2, "Quitinete": 1}
 tipo_vendedor = {"Imobiliaria": 1, "Pessoa Fisica": 2}
 bairro = {}
+desc = {}
 
 mapeamento = {
     "tipo": tipo,
     "tipo_vendedor": tipo_vendedor,
-    "bairro": {}
+    "bairro": {},
+    "desc": {}
 }
 
 
 def categorizar(col, dict, pd):
     colCoded = pd.Series(col, copy=True)
-    if dict == 'bairro':
+    if dict == 'bairro' or dict == "desc":
         generateMap(col, dict)
     for key, value in mapeamento[dict].items():
         colCoded.replace(key, value, inplace=True)
@@ -99,7 +101,7 @@ def boxplot(dt):
             data = pd.concat([dt['preco'], dt[col]], axis=1)
             f, ax = plt.subplots(figsize=(8, 6))
             fig = sns.boxplot(x=col, y="preco", data=data)
-            fig.axis(ymin=10)
+            fig.axis(ymin=2)
             plt.savefig('Boxplot/BoxPlot_'+col+'.png')
             plt.cla()
             plt.clf()
